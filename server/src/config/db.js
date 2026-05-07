@@ -1,7 +1,12 @@
 import mongoose from 'mongoose';
+import dns from 'dns';
+
+// Fix for 'querySrv ECONNREFUSED' when local DNS blocks SRV lookups
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 
 const connectDB = async () => {
   try {
+    console.log(process.env.MONGO_URI);
     const conn = await mongoose.connect(process.env.MONGO_URI);
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {

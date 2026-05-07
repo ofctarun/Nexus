@@ -10,6 +10,8 @@ import RegisterPage from './pages/RegisterPage';
 import DashboardPage from './pages/DashboardPage';
 import ChatPage from './pages/ChatPage';
 import DocumentsPage from './pages/DocumentsPage';
+import VoiceAssistantPage from './pages/VoiceAssistantPage';
+import PersonalizationPage from './pages/PersonalizationPage';
 import AdminPage from './pages/AdminPage';
 import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -36,6 +38,8 @@ export default function App() {
         {/* All authenticated users */}
         <Route path="/dashboard" element={<DashboardPage />} />
         <Route path="/chat" element={<ChatPage />} />
+        <Route path="/voice" element={<VoiceAssistantPage />} />
+        <Route path="/personalization" element={<PersonalizationPage />} />
         <Route path="/settings" element={<SettingsPage />} />
 
         {/* Members + Admins only */}
