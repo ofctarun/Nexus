@@ -1,15 +1,46 @@
+import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { selectCurrentUser, logout } from '../../features/auth/authSlice';
 import RoleBadge from '../ui/RoleBadge';
-import { LogOut, Bell } from 'lucide-react';
+import { LogOut, Bell, ChevronDown, User, Settings } from 'lucide-react';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+
+const notifications = [
+  { id: 1, title: 'New document uploaded', description: 'Your latest PDF is ready in File Manager.' },
+  { id: 2, title: 'New chat reply', description: 'Nexus has answered your latest question.' },
+  { id: 3, title: 'Organization update', description: 'A new policy was shared with your team.' },
+];
 
 export default function TopBar() {
   const user = useSelector(selectCurrentUser);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showNotifications, setShowNotifications] = useState(false);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const menuRef = useRef(null);
+
+  const initials = user?.name
+    ? user.name
+        .split(' ')
+        .map((segment) => segment[0])
+        .join('')
+        .slice(0, 2)
+        .toUpperCase()
+    : 'ME';
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setShowNotifications(false);
+        setShowProfileMenu(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -23,21 +54,91 @@ export default function TopBar() {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-3">
+    <header className="bg-white border-b border-gray-200 px-6 py-3 relative z-10">
       <div className="flex items-center justify-between">
-        <div></div>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
+          <span className="text-sm text-gray-500">Role</span>
           <RoleBadge role={user?.role} />
-          <button className="p-2 text-gray-400 hover:text-gray-600 hover:bg-gray-100 rounded-lg transition-colors">
-            <Bell size={18} />
-          </button>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-red-500 hover:bg-red-50 rounded-lg transition-colors"
-          >
-            <LogOut size={16} />
-            Logout
-          </button>
+        </div>
+
+        <div className="flex items-center gap-3 relative" ref={menuRef}>
+          <div className="relative">
+            <button
+              onClick={() => {
+                setShowNotifications((current) => !current);
+                setShowProfileMenu(false);
+              }}
+              className="p-2 rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition"
+              aria-label="Notifications"
+            >
+              <Bell size={18} />
+            </button>
+
+            {showNotifications && (
+              <div className="absolute right-0 mt-3 w-80 rounded-3xl border border-gray-200 bg-white shadow-lg ring-1 ring-black/5 overflow-hidden">
+                <div className="px-4 py-3 border-b border-gray-100">
+                  <p className="text-sm font-semibold text-gray-900">Notifications</p>
+                  <p className="text-xs text-gray-500">Latest updates for your member account</p>
+                </div>
+                <div className="divide-y divide-gray-100">
+                  {notifications.map((item) => (
+                    <div key={item.id} className="px-4 py-3 hover:bg-gray-50 transition">
+                      <p className="text-sm font-medium text-gray-900">{item.title}</p>
+                      <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="px-4 py-3 text-right">
+                  <Link to="/dashboard" className="text-sm font-medium text-indigo-600 hover:text-indigo-700">
+                    View all
+                  </Link>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <div className="relative">
+            <button
+              onClick={() => {
+                setShowProfileMenu((current) => !current);
+                setShowNotifications(false);
+              }}
+              className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 hover:shadow-sm transition"
+              aria-label="Profile menu"
+            >
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-700">
+                {initials}
+              </span>
+              <ChevronDown size={16} />
+            </button>
+
+            {showProfileMenu && (
+              <div className="absolute right-0 mt-3 w-56 rounded-3xl border border-gray-200 bg-white shadow-lg ring-1 ring-black/5 overflow-hidden">
+                <Link
+                  to="/personalization"
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
+                >
+                  <User size={16} />
+                  <span>Personalization</span>
+                </Link>
+                <Link
+                  to="/settings"
+                  className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 transition"
+                >
+                  <Settings size={16} />
+                  <span>Settings</span>
+                </Link>
+                <button
+                  type="button"
+                  onClick={handleLogout}
+                  className="flex w-full items-center gap-3 px-4 py-3 text-sm text-red-600 hover:bg-red-50 transition"
+                >
+                  <LogOut size={16} />
+                  <span>Logout</span>
+                </button>
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </header>
