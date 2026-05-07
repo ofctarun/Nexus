@@ -1,5 +1,5 @@
 import { Outlet, useLocation } from 'react-router-dom';
-import Sidebar from './Sidebar';
+// import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 
 /**
@@ -12,11 +12,11 @@ export default function AppLayout() {
 
   return (
     <div className="flex h-screen bg-base-200">
-      {!hideSidebar && <Sidebar />}
+      {/* {!hideSidebar && <Sidebar />} */}
 
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar />
-        <main className="flex-1 overflow-y-auto p-6">
+        <main className="flex-1 overflow-y-auto px-6 py-2">
           <Outlet />
         </main>
       </div>

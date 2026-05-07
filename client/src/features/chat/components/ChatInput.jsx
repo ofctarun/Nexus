@@ -26,21 +26,30 @@ export default function ChatInput() {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="border-t border-gray-200 p-4">
-      <div className="flex items-center gap-2">
-        <button type="button" className="p-2 text-gray-300 rounded-full cursor-not-allowed" title="Voice input (coming soon)" disabled>
+    <form onSubmit={handleSubmit} className="space-y-3">
+      <div className="flex items-center gap-3 rounded-[32px] border border-[#9acee2]/30 bg-white px-4 py-3 shadow-sm shadow-slate-200/40">
+        <button type="button" className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#eff7ff] text-[#223959] transition-colors" title="Voice input (coming soon)" disabled>
           <Mic size={18} />
         </button>
         <input
-          type="text" value={message} onChange={(e) => setMessage(e.target.value)}
-          placeholder="Ask about your documents..."
-          className="flex-1 px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500 transition-colors"
+          type="text"
+          value={message}
+          onChange={(e) => setMessage(e.target.value)}
+          placeholder="Ask Nexus about your documents..."
+          className="flex-1 bg-transparent text-sm text-slate-700 placeholder:text-slate-400 focus:outline-none"
           disabled={!sessionId || isStreaming || isLoading}
         />
-        <button type="submit" className="p-2.5 bg-navy-500 text-white rounded-xl hover:bg-navy-600 transition-colors disabled:opacity-30" disabled={!message.trim() || !sessionId || isStreaming || isLoading}>
-          <Send size={16} />
+        <button
+          type="submit"
+          className="inline-flex h-12 items-center justify-center rounded-2xl bg-[#223959] px-5 text-white transition-all duration-200 hover:bg-[#1fab78] disabled:cursor-not-allowed disabled:opacity-40"
+          disabled={!message.trim() || !sessionId || isStreaming || isLoading}
+        >
+          <Send size={18} />
         </button>
       </div>
+      {!sessionId && (
+        <p className="text-center text-sm text-slate-400">Select or create a chat session first to start the conversation.</p>
+      )}
     </form>
   );
 }
