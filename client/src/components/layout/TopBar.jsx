@@ -82,8 +82,7 @@ export default function TopBar() {
         <div className="flex items-center">
           <Link 
             to="/dashboard" 
-            className="text-3xl font-bold tracking-widest text-white drop-shadow-md transition-opacity hover:opacity-90"
-            style={{ fontFamily: '"Smooch Sans", sans-serif' }}
+            className="font-nexus text-3xl font-bold tracking-widest text-white drop-shadow-md transition-opacity hover:opacity-90"
           >
             NEXUS
           </Link>

@@ -79,10 +79,7 @@ export default function DashboardPage() {
       
       {/* Top Center NEXUS Branding */}
       <div className="mb-10 text-center animate-[popIn_0.8s_ease-out_forwards]">
-        <h1 
-          className="text-6xl md:text-7xl font-bold tracking-widest text-navy-800 drop-shadow-md"
-          style={{ fontFamily: '"Smooch Sans", sans-serif' }}
-        >
+        <h1 className="font-nexus text-6xl md:text-7xl font-bold tracking-widest text-navy-800 drop-shadow-md">
           NEXUS
         </h1>
       </div>
