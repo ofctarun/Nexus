@@ -190,14 +190,11 @@ export const refreshTokenHandler = async (req, res, next) => {
       return res.status(401).json({ message: 'Invalid refresh token.' });
     }
 
-    // Rotate refresh token
+    // To prevent race conditions during rapid page refreshes or React StrictMode double-mounts,
+    // we only issue a new access token and keep the existing refresh token.
     const newAccessToken = generateAccessToken(user._id);
-    const newRefreshToken = generateRefreshToken(user._id);
 
-    user.refreshToken = newRefreshToken;
-    await user.save();
-
-    setRefreshTokenCookie(res, newRefreshToken);
+    setRefreshTokenCookie(res, refreshToken);
 
     res.json({
       user: { _id: user._id, name: user.name, email: user.email, role: user.role, organizationId: user.organizationId },

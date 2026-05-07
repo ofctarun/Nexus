@@ -1,17 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 
 /**
- * AppLayout — Main application shell with sidebar + top bar + content area.
+ * AppLayout — Main application shell with top bar + content area.
  * Used as the layout wrapper for all authenticated routes.
  */
 export default function AppLayout() {
   return (
     <div className="flex h-screen bg-base-200">
-      {/* Sidebar */}
-      <Sidebar />
-
       {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar />

@@ -54,21 +54,32 @@ export default function TopBar() {
   };
 
   return (
-    <header className="bg-white border-b border-gray-200 px-6 py-3 relative z-10">
+    <header className="bg-navy-900 border-b border-navy-800 px-6 py-3 relative z-10 shadow-md">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-500">Role</span>
-          <RoleBadge role={user?.role} />
+        {/* Left Side: NEXUS Branding */}
+        <div className="flex items-center">
+          <Link 
+            to="/dashboard" 
+            className="text-3xl font-bold tracking-widest text-white drop-shadow-md"
+            style={{ fontFamily: '"Smooch Sans", sans-serif' }}
+          >
+            NEXUS
+          </Link>
         </div>
 
-        <div className="flex items-center gap-3 relative" ref={menuRef}>
+        {/* Right Side: Role, Notifications, Profile */}
+        <div className="flex items-center gap-4 relative" ref={menuRef}>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-navy-200 hidden sm:inline-block">Role</span>
+            <RoleBadge role={user?.role} />
+          </div>
           <div className="relative">
             <button
               onClick={() => {
                 setShowNotifications((current) => !current);
                 setShowProfileMenu(false);
               }}
-              className="p-2 rounded-xl border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 transition"
+              className="p-2 rounded-xl border border-navy-700 bg-navy-800 text-navy-100 hover:bg-navy-700 transition"
               aria-label="Notifications"
             >
               <Bell size={18} />
@@ -103,10 +114,10 @@ export default function TopBar() {
                 setShowProfileMenu((current) => !current);
                 setShowNotifications(false);
               }}
-              className="flex items-center gap-2 rounded-full border border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 hover:shadow-sm transition"
+              className="flex items-center gap-2 rounded-full border border-navy-700 bg-navy-800 px-3 py-2 text-sm text-navy-100 hover:bg-navy-700 transition"
               aria-label="Profile menu"
             >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-slate-100 text-sm font-semibold text-slate-700">
+              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-navy-600 text-sm font-semibold text-white">
                 {initials}
               </span>
               <ChevronDown size={16} />
