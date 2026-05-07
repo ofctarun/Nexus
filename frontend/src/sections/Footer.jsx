@@ -1,4 +1,4 @@
-import { Twitter, Linkedin, Github } from 'lucide-react'
+import { Globe, Link2, Mail } from 'lucide-react'
 
 const productLinks = ['Overview', 'Features', 'Security', 'Pricing']
 const resourceLinks = ['Documentation', 'API Reference', 'Blog', 'Support']
@@ -73,9 +73,9 @@ export default function Footer() {
           </p>
           <div className="flex gap-4">
             {[
-              { Icon: Twitter, label: 'Twitter' },
-              { Icon: Linkedin, label: 'LinkedIn' },
-              { Icon: Github, label: 'GitHub' },
+              { Icon: Globe, label: 'Website' },
+              { Icon: Link2, label: 'Social' },
+              { Icon: Mail, label: 'Email' },
             ].map(({ Icon, label }) => (
               <a
                 key={label}
