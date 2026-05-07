@@ -75,14 +75,14 @@ export default function TopBar() {
   };
 
   return (
-<<<<<<< HEAD
-    <header className="bg-navy-900 border-b border-navy-800 px-6 py-3 relative z-10 shadow-md">
+    <header className="bg-[#223959] border-b border-[#1fab78]/20 px-6 py-3 relative z-10 shadow-md">
       <div className="flex items-center justify-between">
+        
         {/* Left Side: NEXUS Branding */}
         <div className="flex items-center">
           <Link 
             to="/dashboard" 
-            className="text-3xl font-bold tracking-widest text-white drop-shadow-md"
+            className="text-3xl font-bold tracking-widest text-white drop-shadow-md transition-opacity hover:opacity-90"
             style={{ fontFamily: '"Smooch Sans", sans-serif' }}
           >
             NEXUS
@@ -92,34 +92,19 @@ export default function TopBar() {
         {/* Right Side: Role, Notifications, Profile */}
         <div className="flex items-center gap-4 relative" ref={menuRef}>
           <div className="flex items-center gap-2">
-            <span className="text-sm text-navy-200 hidden sm:inline-block">Role</span>
-            <RoleBadge role={user?.role} />
+            <span className="text-sm text-[#9acee2]/70 hidden sm:inline-block uppercase tracking-wider font-semibold">Role</span>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-sm uppercase tracking-[0.1em] text-[#9acee2] shadow-sm font-semibold">
+              {user?.role || 'Member'}
+            </span>
           </div>
-=======
-    <header className="bg-[#223959] border-b border-[#1fab78]/20 px-6 py-3 relative z-10">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3 text-white">
-          <div className="flex items-center gap-3">
-            <span className="text-lg font-semibold uppercase tracking-[0.18em]">NEXUS</span>
-          </div>
-        </div>
 
-        <div className="flex items-center gap-3 relative" ref={menuRef}>
-          <span className="rounded-full bg-white/10 px-3 py-1 text-sm uppercase tracking-[0.18em] text-[#9acee2] shadow-sm">
-            Member
-          </span>
->>>>>>> 340e0d188a7f2797d084bf011c5df4feca45c5ab
           <div className="relative">
             <button
               onClick={() => {
                 setShowNotifications((current) => !current);
                 setShowProfileMenu(false);
               }}
-<<<<<<< HEAD
-              className="p-2 rounded-xl border border-navy-700 bg-navy-800 text-navy-100 hover:bg-navy-700 transition"
-=======
               className="p-2 rounded-2xl bg-white/10 text-white shadow-sm transition-all duration-200 ease-in-out hover:bg-white/20 hover:scale-105 hover:shadow-md active:scale-95"
->>>>>>> 340e0d188a7f2797d084bf011c5df4feca45c5ab
               aria-label="Notifications"
             >
               <Bell size={18} />
@@ -156,17 +141,10 @@ export default function TopBar() {
                 setShowProfileMenu((current) => !current);
                 setShowNotifications(false);
               }}
-<<<<<<< HEAD
-              className="flex items-center gap-2 rounded-full border border-navy-700 bg-navy-800 px-3 py-2 text-sm text-navy-100 hover:bg-navy-700 transition"
-              aria-label="Profile menu"
-            >
-              <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-navy-600 text-sm font-semibold text-white">
-=======
               className="flex items-center gap-2 rounded-full bg-white/10 px-3 py-2 text-sm text-white shadow-sm transition-all duration-200 ease-in-out hover:bg-white/20 hover:scale-105 hover:shadow-md active:scale-95"
               aria-label="Profile menu"
             >
               <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white text-[#223959] text-sm font-semibold transition-transform duration-200 hover:scale-110">
->>>>>>> 340e0d188a7f2797d084bf011c5df4feca45c5ab
                 {initials}
               </span>
               <ChevronDown size={16} className="transition-transform duration-200" />
