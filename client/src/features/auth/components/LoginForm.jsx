@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 
 export default function LoginForm() {
-  const [formData, setFormData] = useState({ email: '', password: '' });
+  const [formData, setFormData] = useState({ email: 'user@gmail.com', password: 'user@123' });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
