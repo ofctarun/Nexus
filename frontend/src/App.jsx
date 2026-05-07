@@ -8,13 +8,17 @@ import Footer from './sections/Footer'
 
 function App() {
   return (
-    <div className="min-h-screen bg-nexus-dark">
+    <div className="min-h-screen bg-black">
       <Navbar />
       <main>
         <Hero />
-        <Features />
+        <div className="py-8 sm:py-12">
+          <Features />
+        </div>
         <Security />
-        <VoiceAI />
+        <div className="py-8 sm:py-12">
+          <VoiceAI />
+        </div>
         <CTA />
       </main>
       <Footer />

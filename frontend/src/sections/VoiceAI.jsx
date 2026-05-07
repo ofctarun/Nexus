@@ -1,13 +1,13 @@
 import { useEffect, useRef } from 'react'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import ThreatCard from '../components/ThreatCard'
+import FloatingDots from '../components/FloatingDots'
+import SolutionCard from '../components/SolutionCard'
 
-export default function Features() {
+export default function VoiceAI() {
   const sectionRef = useRef(null)
   const badgeRef = useRef(null)
   const headlineRef = useRef(null)
-  const subtitleRef = useRef(null)
   const cardRef = useRef(null)
 
   useEffect(() => {
@@ -20,13 +20,9 @@ export default function Features() {
         scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
         y: 30, opacity: 0, duration: 0.8, delay: 0.15, ease: 'power3.out'
       })
-      gsap.from(subtitleRef.current, {
-        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%' },
-        y: 20, opacity: 0, duration: 0.7, delay: 0.3, ease: 'power3.out'
-      })
       gsap.from(cardRef.current, {
         scrollTrigger: { trigger: cardRef.current, start: 'top 85%' },
-        y: 40, opacity: 0, duration: 0.8, delay: 0.15, ease: 'power3.out'
+        y: 40, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power3.out'
       })
     }, sectionRef)
 
@@ -35,15 +31,18 @@ export default function Features() {
 
   return (
     <section
-      id="features"
+      id="voice-ai"
       ref={sectionRef}
       className="relative bg-nexus-white rounded-3xl mx-4 sm:mx-8 py-16 sm:py-24 px-5 sm:px-8 overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto">
+      {/* Floating dots overlay */}
+      <FloatingDots />
+
+      <div className="max-w-5xl mx-auto relative z-10">
         {/* Pill badge */}
         <div ref={badgeRef} className="flex justify-center mb-4 sm:mb-6">
           <span className="text-nexus-charcoal bg-white border border-nexus-border rounded-full px-4 py-1 text-xs sm:text-sm font-medium">
-            The Problem
+            Solutions
           </span>
         </div>
 
@@ -52,22 +51,14 @@ export default function Features() {
           ref={headlineRef}
           className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-center text-nexus-black mb-4"
         >
-          New AI workflows equal{' '}
-          <span className="text-nexus-glow">New Threats</span>
+          Evolving trust for{' '}
+          <span className="text-nexus-glow">AI</span>
+          {' '}with
         </h2>
 
-        {/* Subtitle */}
-        <p
-          ref={subtitleRef}
-          className="text-nexus-charcoal/70 text-sm sm:text-base max-w-2xl mx-auto text-center mb-6"
-        >
-          As enterprises adopt AI-powered document workflows, new attack vectors emerge.
-          From model backdoors to data extraction — the threat landscape is evolving faster than traditional defenses.
-        </p>
-
-        {/* Threat Card */}
+        {/* Solution Card */}
         <div ref={cardRef}>
-          <ThreatCard />
+          <SolutionCard />
         </div>
       </div>
     </section>
