@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+@theme {
+  /* ── Nexus Brand Colors (EQTY-inspired dark + emerald) ── */
+  --color-nexus-black: #000000;
+  --color-nexus-dark: #020505;
+  --color-nexus-darker: #010303;
+  --color-nexus-charcoal: #2C3333;
+  --color-nexus-card: rgba(26, 26, 26, 0.55);
+  --color-nexus-card-hover: rgba(26, 26, 26, 0.7);
+  --color-nexus-border: rgba(186, 184, 185, 0.1);
+  --color-nexus-border-hover: rgba(46, 117, 93, 0.3);
+  --color-nexus-emerald: #014433;
+  --color-nexus-forest: #2E755D;
+  --color-nexus-glow: #00FF80;
+  --color-nexus-glow-dim: rgba(0, 255, 128, 0.15);
+  --color-nexus-sage: #7D9B93;
+  --color-nexus-mint: #DEF1E6;
+  --color-nexus-soft-gray: #BAB8B9;
+  --color-nexus-white: #FEFEFE;
+  --color-nexus-text: #FEFEFE;
+  --color-nexus-text-secondary: #BAB8B9;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Global resets */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: #000000;
+  color: var(--color-nexus-text);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: rgba(26, 26, 26, 0.5);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid rgba(186, 184, 185, 0.08);
+}
+
+.glass-hover:hover {
+  background: rgba(26, 26, 26, 0.7);
+  border-color: rgba(46, 117, 93, 0.3);
+}
+
+/* Green glow utility */
+.glow-green {
+  box-shadow: 0 0 40px rgba(0, 255, 128, 0.15), 0 0 80px rgba(0, 255, 128, 0.05);
+}
+
+.glow-green-sm {
+  box-shadow: 0 0 20px rgba(0, 255, 128, 0.2), 0 0 40px rgba(0, 255, 128, 0.08);
+}
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #000; }
+::-webkit-scrollbar-thumb { background: rgba(46, 117, 93, 0.4); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(46, 117, 93, 0.6); }
+
+/* Selection color */
+::selection {
+  background-color: rgba(0, 255, 128, 0.2);
+  color: #FEFEFE;
+}
+
+/* Pulse glow animation */
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50% { opacity: 0.7; transform: scale(1.05); }
+}
+.animate-pulse-glow {
+  animation: pulse-glow 4s ease-in-out infinite;
+}
+
+/* Horizon arc glow */
+@keyframes horizon-breathe {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.8; }
+}
+.animate-horizon {
+  animation: horizon-breathe 6s ease-in-out infinite;
+}
+
+/* EQTY-style floating navbar pill */
+.navbar-pill {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(186, 184, 185, 0.12);
+  border-radius: 9999px;
+}
+
+/* Circuit line animation */
+@keyframes draw-circuit {
+  0% { stroke-dashoffset: 200; opacity: 0; }
+  30% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 1; }
+}
+.animate-circuit {
+  stroke-dasharray: 200;
+  animation: draw-circuit 2.5s ease-out forwards;
+}
+
+/* Chip glow pulse */
+@keyframes chip-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(0,255,128,0.2), 0 0 60px rgba(0,255,128,0.1), 0 0 100px rgba(0,255,128,0.05); }
+  50% { box-shadow: 0 0 30px rgba(0,255,128,0.35), 0 0 80px rgba(0,255,128,0.18), 0 0 120px rgba(0,255,128,0.08); }
+}
+.animate-chip-glow {
+  animation: chip-glow 3s ease-in-out infinite;
+}
+
+/* Node pulse */
+@keyframes node-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.4); opacity: 1; }
+}
+.animate-node-pulse {
+  animation: node-pulse 2s ease-in-out infinite;
+}
+
+/* Wavy bottom glow for hero */
+.hero-wave-glow {
+  background: 
+    radial-gradient(ellipse 60% 40% at 30% 100%, rgba(0,255,128,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 30% at 70% 100%, rgba(46,117,93,0.12) 0%, transparent 50%),
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(0,255,128,0.04) 0%, transparent 70%);
+}
