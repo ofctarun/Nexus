@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import TopBar from './TopBar';
 
@@ -7,12 +7,13 @@ import TopBar from './TopBar';
  * Used as the layout wrapper for all authenticated routes.
  */
 export default function AppLayout() {
+  const location = useLocation();
+  const hideSidebar = location.pathname === '/dashboard';
+
   return (
     <div className="flex h-screen bg-base-200">
-      {/* Sidebar */}
-      <Sidebar />
+      {!hideSidebar && <Sidebar />}
 
-      {/* Main Content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         <TopBar />
         <main className="flex-1 overflow-y-auto p-6">

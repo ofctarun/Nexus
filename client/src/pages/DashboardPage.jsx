@@ -1,8 +1,7 @@
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { selectCurrentUser, selectUserRole } from '../features/auth/authSlice';
-import StatsCards from '../features/admin/components/StatsCards';
-import { FileText, MessageSquare, Shield, Mic, Folder } from 'lucide-react';
+import { MessageSquare, Mic, Folder } from 'lucide-react';
 
 export default function DashboardPage() {
   const user = useSelector(selectCurrentUser);
@@ -10,88 +9,83 @@ export default function DashboardPage() {
   const isMember = role === 'member';
 
   return (
-    <div className="space-y-6">
-      <div>
-        <h1 className="text-3xl font-bold text-gray-900">Welcome to Nexus</h1>
-        <p className="text-gray-400 mt-1">
-          {isMember
-            ? `Hello ${user?.name?.split(' ')[0] || 'Member'}, this is your Nexus dashboard.`
-            : `Here's what's happening in your organization today.`}
-        </p>
+    <div className="space-y-0">
+      <div className="flex items-center justify-center py-20">
+        <h1 className="text-8xl font-black uppercase tracking-[0.2em] text-[#223959]" style={{ fontFamily: 'Bebas Neue, sans-serif' }}>
+          NEXUS
+        </h1>
       </div>
 
-      {isMember ? (
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Link to="/chat" className="bg-white border border-gray-200 rounded-3xl p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-start gap-4">
-              <div className="bg-slate-100 rounded-3xl p-4"><MessageSquare size={24} className="text-slate-700" /></div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900">Start Chat</h3>
-                <p className="mt-2 text-sm text-gray-500">Open the chat workspace and ask Nexus about your documents.</p>
-              </div>
+      <div className="grid gap-6 lg:grid-cols-3">
+        <Link
+          to="/chat"
+          className="group relative overflow-hidden rounded-[32px] border border-[#9acee2]/20 bg-white/90 p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:border-[#9acee2]/40"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="grid h-16 w-16 place-items-center rounded-3xl bg-[#9acee2] text-[#223959] shadow-sm transition group-hover:bg-[#1fab78] group-hover:text-white">
+              <MessageSquare size={26} />
             </div>
-          </Link>
-
-          <Link to="/documents" className="bg-white border border-gray-200 rounded-3xl p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-start gap-4">
-              <div className="bg-emerald-50 rounded-3xl p-4"><Folder size={24} className="text-emerald-600" /></div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900">File Manager</h3>
-                <p className="mt-2 text-sm text-gray-500">View and manage all documents you uploaded to Nexus.</p>
-              </div>
+            <div className="opacity-0 transition-opacity group-hover:opacity-100">
+              <span className="text-[#223959] text-lg">→</span>
             </div>
-          </Link>
-
-          <Link to="/voice" className="bg-white border border-gray-200 rounded-3xl p-6 hover:shadow-lg transition-shadow">
-            <div className="flex items-start gap-4">
-              <div className="bg-indigo-50 rounded-3xl p-4"><Mic size={24} className="text-indigo-600" /></div>
-              <div>
-                <h3 className="text-xl font-semibold text-gray-900">Voice Assistant</h3>
-                <p className="mt-2 text-sm text-gray-500">Talk to Nexus with voice commands and get instant responses.</p>
-              </div>
-            </div>
-          </Link>
-        </div>
-      ) : (
-        <>
-          {role === 'admin' && <StatsCards />}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Link to="/chat" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
-              <div className="flex items-center gap-3">
-                <div className="bg-navy-50 rounded-xl p-3"><MessageSquare size={22} className="text-navy-500" /></div>
-                <div>
-                  <h3 className="font-semibold text-gray-900">Start Chat</h3>
-                  <p className="text-xs text-gray-400">Query your documents with AI</p>
-                </div>
-              </div>
-            </Link>
-
-            {role !== 'guest' && (
-              <Link to="/documents" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <div className="bg-emerald-50 rounded-xl p-3"><FileText size={22} className="text-emerald-500" /></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Upload Files</h3>
-                    <p className="text-xs text-gray-400">Add documents to the knowledge base</p>
-                  </div>
-                </div>
-              </Link>
-            )}
-
-            {role === 'admin' && (
-              <Link to="/admin" className="bg-white border border-gray-200 rounded-xl p-5 hover:shadow-md transition-shadow">
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-50 rounded-xl p-3"><Shield size={22} className="text-amber-500" /></div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">Admin Panel</h3>
-                    <p className="text-xs text-gray-400">Manage users and security</p>
-                  </div>
-                </div>
-              </Link>
-            )}
           </div>
-        </>
-      )}
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold text-[#223959]">Start Chat</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-600">Begin a new conversation with Nexus and get instant answers from your organization documents.</p>
+          </div>
+          <div className="mt-6">
+            <span className="inline-flex items-center rounded-full bg-[#223959] px-4 py-2 text-sm font-semibold text-white transition group-hover:bg-[#1fab78]">
+              Start Chat →
+            </span>
+          </div>
+        </Link>
+
+        <Link
+          to="/documents"
+          className="group relative overflow-hidden rounded-[32px] border border-[#9acee2]/20 bg-white/90 p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:border-[#9acee2]/40"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="grid h-16 w-16 place-items-center rounded-3xl bg-[#1fab78] text-white shadow-sm transition group-hover:bg-[#223959]">
+              <Folder size={26} />
+            </div>
+            <div className="opacity-0 transition-opacity group-hover:opacity-100">
+              <span className="text-[#223959] text-lg">→</span>
+            </div>
+          </div>
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold text-[#223959]">File Manager</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-600">Browse everything you've uploaded so far and keep your knowledge base organized.</p>
+          </div>
+          <div className="mt-6">
+            <span className="inline-flex items-center rounded-full bg-[#223959] px-4 py-2 text-sm font-semibold text-white transition group-hover:bg-[#1fab78]">
+              View Files →
+            </span>
+          </div>
+        </Link>
+
+        <Link
+          to="/voice"
+          className="group relative overflow-hidden rounded-[32px] border border-[#9acee2]/20 bg-white/90 p-8 shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-lg hover:border-[#9acee2]/40"
+        >
+          <div className="flex items-center justify-between gap-4">
+            <div className="grid h-16 w-16 place-items-center rounded-3xl bg-[#223959] text-white shadow-sm transition group-hover:bg-[#9acee2] group-hover:text-[#223959]">
+              <Mic size={26} />
+            </div>
+            <div className="opacity-0 transition-opacity group-hover:opacity-100">
+              <span className="text-[#223959] text-lg">→</span>
+            </div>
+          </div>
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold text-[#223959]">Voice Assistant</h2>
+            <p className="mt-3 text-sm leading-6 text-slate-600">Use your voice to interact with Nexus and get hands-free help instantly.</p>
+          </div>
+          <div className="mt-6">
+            <span className="inline-flex items-center rounded-full bg-[#223959] px-4 py-2 text-sm font-semibold text-white transition group-hover:bg-[#9acee2] group-hover:text-[#223959]">
+              Start Voice →
+            </span>
+          </div>
+        </Link>
+      </div>
     </div>
   );
 }

@@ -3,9 +3,9 @@
  * Used on both users and documents to show clearance tier
  */
 const ROLE_STYLES = {
-  admin: 'bg-navy-500 text-white',
-  member: 'bg-emerald-500 text-white',
-  guest: 'bg-sky-400 text-white',
+  admin: 'bg-[#223959] text-white',
+  member: 'bg-[#1fab78] text-white',
+  guest: 'bg-[#9acee2] text-[#223959]',
 };
 
 const ROLE_LABELS = {
