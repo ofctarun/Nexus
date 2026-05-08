@@ -75,7 +75,7 @@ export default function DashboardPage() {
     : "grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-[1200px] mx-auto animate-[slideUp_1s_ease-out_0.3s_both]";
 
   return (
-    <div className="w-full h-full min-h-[calc(100vh-70px)] flex flex-col items-center justify-center px-4 md:px-8 pb-12 pt-8">
+    <div className="w-full h-full flex flex-col items-center justify-center px-4 md:px-8 pb-12 pt-8">
       
       {/* Top Center NEXUS Branding */}
       <div className="mb-10 text-center animate-[popIn_0.8s_ease-out_forwards]">
