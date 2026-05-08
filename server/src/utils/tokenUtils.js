@@ -40,7 +40,7 @@ export const clearRefreshTokenCookie = (res) => {
   res.clearCookie('refreshToken', {
     httpOnly: true,
     secure: true,
-    sameSite: 'lax',
+    sameSite: "none",
     path: '/',
   });
 };
