@@ -9,7 +9,8 @@ import { logAuditEvent } from '../middleware/audit.js';
 // POST /api/auth/register
 export const register = async (req, res, next) => {
   try {
-    const { name, email, password, orgAction, inviteCode, orgName } = req.body;
+    const { name, email: rawEmail, password, orgAction, inviteCode, orgName } = req.body;
+    const email = rawEmail.toLowerCase();
 
     // Check if user already exists
     const existingUser = await User.findOne({ email });
@@ -134,7 +135,8 @@ export const register = async (req, res, next) => {
 // POST /api/auth/login
 export const login = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    const { email: rawEmail, password } = req.body;
+    const email = rawEmail.toLowerCase();
 
     const user = await User.findOne({ email }).select('+password');
     if (!user) {

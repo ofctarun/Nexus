@@ -18,6 +18,9 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 const app = express();
 
+// Trust proxy (required for Render/Vercel to handle cookies correctly)
+app.set('trust proxy', 1);
+
 // ─── Global Middleware ─────────────────────
 // CORS: allow the local dev client, and the Vercel app in production
 const allowedOrigins = [process.env.CLIENT_URL, 'https://nexus40.vercel.app'].filter(Boolean);
