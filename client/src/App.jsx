@@ -1,7 +1,13 @@
+import { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCredentials, initComplete, selectIsInitialized } from './features/auth/authSlice';
+import axios from 'axios';
 import useTokenRefresh from './hooks/useTokenRefresh';
 import ProtectedRoute from './features/auth/components/ProtectedRoute';
 import AppLayout from './components/layout/AppLayout';
+
+let authInitAttempted = false;
 
 // Pages
 import LandingPage from './pages/LandingPage';
@@ -17,8 +23,37 @@ import SettingsPage from './pages/SettingsPage';
 import NotFoundPage from './pages/NotFoundPage';
 
 export default function App() {
-  // Start background token refresh
+  const dispatch = useDispatch();
+  const isInitialized = useSelector(selectIsInitialized);
+
+  // Initial Auth Check
+  useEffect(() => {
+    if (authInitAttempted) return;
+    authInitAttempted = true;
+
+    const checkAuth = async () => {
+      try {
+        const { data } = await axios.get('/api/auth/refresh', { withCredentials: true });
+        dispatch(setCredentials(data));
+      } catch {
+        // No valid session, just finish init
+      } finally {
+        dispatch(initComplete());
+      }
+    };
+    checkAuth();
+  }, [dispatch]);
+
+  // Start background token refresh (only runs if token exists)
   useTokenRefresh();
+
+  if (!isInitialized) {
+    return (
+      <div className="h-screen w-screen flex items-center justify-center bg-gray-50">
+        <div className="w-8 h-8 border-4 border-navy-500/20 border-t-navy-500 rounded-full animate-spin"></div>
+      </div>
+    );
+  }
 
   return (
     <Routes>

@@ -75,18 +75,28 @@ export default function TopBar() {
   };
 
   return (
-    <header className="bg-[#223959] border-b border-[#1fab78]/20 px-6 py-3 relative z-10">
+    <header className="bg-[#223959] border-b border-[#1fab78]/20 px-6 py-3 relative z-10 shadow-md">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3 text-white">
-          <div className="flex items-center gap-3">
-            <span className="text-lg font-semibold uppercase tracking-[0.18em]">NEXUS</span>
-          </div>
+        
+        {/* Left Side: NEXUS Branding */}
+        <div className="flex items-center">
+          <Link 
+            to="/dashboard" 
+            className="font-nexus text-3xl font-bold tracking-widest text-white drop-shadow-md transition-opacity hover:opacity-90"
+          >
+            NEXUS
+          </Link>
         </div>
 
-        <div className="flex items-center gap-3 relative" ref={menuRef}>
-          <span className="rounded-full bg-white/10 px-3 py-1 text-sm uppercase tracking-[0.18em] text-[#9acee2] shadow-sm">
-            Member
-          </span>
+        {/* Right Side: Role, Notifications, Profile */}
+        <div className="flex items-center gap-4 relative" ref={menuRef}>
+          <div className="flex items-center gap-2">
+            <span className="text-sm text-[#9acee2]/70 hidden sm:inline-block uppercase tracking-wider font-semibold">Role</span>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-sm uppercase tracking-[0.1em] text-[#9acee2] shadow-sm font-semibold">
+              {user?.role || 'Member'}
+            </span>
+          </div>
+
           <div className="relative">
             <button
               onClick={() => {
