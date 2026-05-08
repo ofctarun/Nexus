@@ -120,7 +120,8 @@ export const sendInviteEmail = async (req, res, next) => {
     await inviteToken.save();
 
     const organization = await Organization.findById(req.user.organizationId);
-    const acceptUrl = `${process.env.CLIENT_URL || 'http://localhost:5173'}/register?inviteCode=${encodeURIComponent(code)}`;
+    const clientBase = req.clientBaseUrl || process.env.CLIENT_URL || 'http://localhost:5173';
+    const acceptUrl = `${clientBase}/register?inviteCode=${encodeURIComponent(code)}`;
 
     await sendInvitationEmail({
       to: email,
