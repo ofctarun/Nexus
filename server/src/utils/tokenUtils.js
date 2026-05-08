@@ -26,10 +26,10 @@ export const verifyRefreshToken = (token) => {
 export const setRefreshTokenCookie = (res, token) => {
   res.cookie('refreshToken', token, {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
-    sameSite: 'lax',
+    secure: true,
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 days
-    path: '/api/auth',
+    path: '/',
   });
 };
 
@@ -39,8 +39,8 @@ export const setRefreshTokenCookie = (res, token) => {
 export const clearRefreshTokenCookie = (res) => {
   res.clearCookie('refreshToken', {
     httpOnly: true,
-    secure: process.env.NODE_ENV === 'production',
+    secure: true,
     sameSite: 'lax',
-    path: '/api/auth',
+    path: '/',
   });
 };
