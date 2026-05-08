@@ -59,11 +59,10 @@ export default function ChatSidebar({ onSelectSession }) {
                 <button
                   key={session._id}
                   onClick={() => onSelectSession(session._id)}
-                  className={`group flex w-full items-center justify-between gap-3 rounded-3xl px-4 py-3 text-sm transition-all duration-200 ${
-                    currentSessionId === session._id
+                  className={`group flex w-full items-center justify-between gap-3 rounded-3xl px-4 py-3 text-sm transition-all duration-200 ${currentSessionId === session._id
                       ? 'bg-[#223959] text-white shadow-lg shadow-[#223959]/10'
                       : 'bg-white text-slate-600 hover:bg-[#9acee2]/10 hover:text-[#223959]'
-                  }`}
+                    }`}
                 >
                   <span className="truncate">{session.title || 'New Chat'}</span>
                   <button onClick={(e) => handleDelete(e, session._id)} className="opacity-0 transition-opacity duration-200 group-hover:opacity-100 text-slate-400 hover:text-red-500">
@@ -85,4 +84,3 @@ export default function ChatSidebar({ onSelectSession }) {
     </aside>
   );
 }
- it will generate code it will be copied then it will ask 
