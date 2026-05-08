@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getStats, getUsers, changeUserRole, deactivateUser, getAdminDocuments, adminDeleteDocument } from '../controllers/adminController.js';
+import { getStats, getUsers, changeUserRole, deactivateUser, getAdminDocuments, adminDeleteDocument, createInviteToken, sendInviteEmail, getInviteTokens } from '../controllers/adminController.js';
 import { auth } from '../middleware/auth.js';
 import { rbac } from '../middleware/rbac.js';
 
@@ -12,6 +12,9 @@ router.get('/stats', getStats);
 router.get('/users', getUsers);
 router.patch('/users/:id/role', changeUserRole);
 router.patch('/users/:id/deactivate', deactivateUser);
+router.post('/invites', createInviteToken);
+router.post('/invites/send', sendInviteEmail);
+router.get('/invites', getInviteTokens);
 router.get('/documents', getAdminDocuments);
 router.delete('/documents/:id', adminDeleteDocument);
 

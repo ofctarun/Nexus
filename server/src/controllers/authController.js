@@ -1,6 +1,7 @@
 import mongoose from 'mongoose';
 import User from '../models/User.js';
 import Organization from '../models/Organization.js';
+import InviteToken from '../models/InviteToken.js';
 import { generateAccessToken, generateRefreshToken, verifyRefreshToken, setRefreshTokenCookie, clearRefreshTokenCookie } from '../utils/tokenUtils.js';
 import { generateInviteCode } from '../utils/inviteCode.js';
 import { logAuditEvent } from '../middleware/audit.js';
@@ -65,14 +66,43 @@ export const register = async (req, res, next) => {
         inviteCode: org.inviteCode,
       });
     } else {
-      // Join existing organization
-      const org = await Organization.findOne({ inviteCode });
-      if (!org) {
-        return res.status(404).json({ message: 'Invalid invite code.' });
+      // Join existing organization or use one-time invite token
+      const token = await InviteToken.findOne({ code: inviteCode, isUsed: false });
+      let organization = null;
+      let inviteToken = null;
+
+      if (token) {
+        if (token.expiresAt && token.expiresAt < new Date()) {
+          return res.status(400).json({ message: 'Invite token has expired.' });
+        }
+
+        if (token.recipientEmail && token.recipientEmail !== email.toLowerCase()) {
+          return res.status(400).json({ message: 'This invite code is reserved for another email address.' });
+        }
+
+        inviteToken = token;
+        organization = await Organization.findById(token.organizationId);
+        if (!organization) {
+          return res.status(404).json({ message: 'Invalid invite code.' });
+        }
+        organizationId = organization._id;
+        role = token.role;
+      } else {
+        organization = await Organization.findOne({ inviteCode });
+        if (!organization) {
+          return res.status(404).json({ message: 'Invalid invite code.' });
+        }
+        organizationId = organization._id;
       }
-      organizationId = org._id;
 
       const user = await User.create({ name, email, password, role, organizationId });
+
+      if (inviteToken) {
+        inviteToken.isUsed = true;
+        inviteToken.usedAt = new Date();
+        inviteToken.usedBy = user._id;
+        await inviteToken.save();
+      }
 
       const accessToken = generateAccessToken(user._id);
       const refreshToken = generateRefreshToken(user._id);

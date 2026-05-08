@@ -85,3 +85,4 @@ export default function ChatSidebar({ onSelectSession }) {
     </aside>
   );
 }
+ it will generate code it will be copied then it will ask 

@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCredentials, initComplete, selectIsInitialized } from './features/auth/authSlice';
@@ -9,18 +9,25 @@ import AppLayout from './components/layout/AppLayout';
 
 let authInitAttempted = false;
 
-// Pages
-import LandingPage from './pages/LandingPage';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import DashboardPage from './pages/DashboardPage';
-import ChatPage from './pages/ChatPage';
-import DocumentsPage from './pages/DocumentsPage';
-import VoiceAssistantPage from './pages/VoiceAssistantPage';
-import PersonalizationPage from './pages/PersonalizationPage';
-import AdminPage from './pages/AdminPage';
-import SettingsPage from './pages/SettingsPage';
-import NotFoundPage from './pages/NotFoundPage';
+// Lazy load pages
+const LandingPage = lazy(() => import('./pages/LandingPage'));
+const LoginPage = lazy(() => import('./pages/LoginPage'));
+const RegisterPage = lazy(() => import('./pages/RegisterPage'));
+const DashboardPage = lazy(() => import('./pages/DashboardPage'));
+const ChatPage = lazy(() => import('./pages/ChatPage'));
+const DocumentsPage = lazy(() => import('./pages/DocumentsPage'));
+const VoiceAssistantPage = lazy(() => import('./pages/VoiceAssistantPage'));
+const PersonalizationPage = lazy(() => import('./pages/PersonalizationPage'));
+const AdminPage = lazy(() => import('./pages/AdminPage'));
+const SettingsPage = lazy(() => import('./pages/SettingsPage'));
+const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+
+// Loading component
+const PageLoader = () => (
+  <div className="h-screen w-screen flex items-center justify-center bg-gray-50">
+    <div className="w-8 h-8 border-4 border-[#223959]/20 border-t-[#223959] rounded-full animate-spin"></div>
+  </div>
+);
 
 export default function App() {
   const dispatch = useDispatch();
@@ -56,50 +63,52 @@ export default function App() {
   }
 
   return (
-    <Routes>
-      {/* ─── Public Routes ──────────────────────── */}
-      <Route path="/" element={<LandingPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        {/* ─── Public Routes ──────────────────────── */}
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
 
-      {/* ─── Protected Routes (inside AppLayout) ── */}
-      <Route
-        element={
-          <ProtectedRoute>
-            <AppLayout />
-          </ProtectedRoute>
-        }
-      >
-        {/* All authenticated users */}
-        <Route path="/dashboard" element={<DashboardPage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/voice" element={<VoiceAssistantPage />} />
-        <Route path="/personalization" element={<PersonalizationPage />} />
-        <Route path="/settings" element={<SettingsPage />} />
-
-        {/* Members + Admins only */}
+        {/* ─── Protected Routes (inside AppLayout) ── */}
         <Route
-          path="/documents"
           element={
-            <ProtectedRoute allowedRoles={['admin', 'member']}>
-              <DocumentsPage />
+            <ProtectedRoute>
+              <AppLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          {/* All authenticated users */}
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/voice" element={<VoiceAssistantPage />} />
+          <Route path="/personalization" element={<PersonalizationPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
 
-        {/* Admins only */}
-        <Route
-          path="/admin"
-          element={
-            <ProtectedRoute allowedRoles={['admin']}>
-              <AdminPage />
-            </ProtectedRoute>
-          }
-        />
-      </Route>
+          {/* Members + Admins only */}
+          <Route
+            path="/documents"
+            element={
+              <ProtectedRoute allowedRoles={['admin', 'member']}>
+                <DocumentsPage />
+              </ProtectedRoute>
+            }
+          />
 
-      {/* ─── 404 ────────────────────────────────── */}
-      <Route path="*" element={<NotFoundPage />} />
-    </Routes>
+          {/* Admins only */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute allowedRoles={['admin']}>
+                <AdminPage />
+              </ProtectedRoute>
+            }
+          />
+        </Route>
+
+        {/* ─── 404 ────────────────────────────────── */}
+        <Route path="*" element={<NotFoundPage />} />
+      </Routes>
+    </Suspense>
   );
 }

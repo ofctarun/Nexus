@@ -4,6 +4,7 @@ import { selectCurrentUser, logout } from '../features/auth/authSlice';
 import ProfileSettings from '../features/settings/components/ProfileSettings';
 import PasswordChange from '../features/settings/components/PasswordChange';
 import OrgDetails from '../features/organization/components/OrgDetails';
+import InviteCodeManager from '../features/admin/components/InviteCodeManager';
 import ConfirmModal from '../components/ui/ConfirmModal';
 import { useState } from 'react';
 import { Trash2 } from 'lucide-react';
@@ -30,6 +31,7 @@ export default function SettingsPage() {
       <ProfileSettings />
       <PasswordChange />
       <OrgDetails />
+      <InviteCodeManager />
       <div className="bg-red-50 border border-red-200 rounded-xl p-6">
         <h3 className="text-lg font-semibold text-red-600">Danger Zone</h3>
         <p className="text-sm text-gray-600 mt-1">Once you delete your account, there is no going back. Please be certain.</p>
