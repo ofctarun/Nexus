@@ -56,13 +56,13 @@
 
 ## 🛠️ Tech Stack
 
-| Layer      | Technology                                                                 |
-|------------|----------------------------------------------------------------------------|
-| Frontend   | React 19, Vite 8, TailwindCSS 3, DaisyUI 5, Redux Toolkit, RTK Query      |
-| Backend    | Node.js, Express 5, Mongoose 8, JWT, Multer, bcrypt                        |
-| Database   | MongoDB Atlas                                                              |
-| ML (Phase 2) | Python, FastAPI, Ollama (Llama3/Mistral), ChromaDB, Whisper, Redis       |
-| Auth       | Access + Refresh Token (httpOnly cookie), Background auto-refresh          |
+| Layer        | Technology                                                           |
+| ------------ | -------------------------------------------------------------------- |
+| Frontend     | React 19, Vite 8, TailwindCSS 3, DaisyUI 5, Redux Toolkit, RTK Query |
+| Backend      | Node.js, Express 5, Mongoose 8, JWT, Multer, bcrypt                  |
+| Database     | MongoDB Atlas                                                        |
+| ML (Phase 2) | Python, FastAPI, Ollama (Llama3/Mistral), ChromaDB, Whisper, Redis   |
+| Auth         | Access + Refresh Token (httpOnly cookie), Background auto-refresh    |
 
 ---
 
@@ -217,20 +217,20 @@ Nexus/
 
 ## 🔐 Role-Based Access Control (RBAC)
 
-| Feature                | Admin | Member | Guest |
-|------------------------|:-----:|:------:|:-----:|
-| View Dashboard         |  ✅   |   ✅   |  ✅   |
-| Chat with AI           |  ✅   |   ✅   |  ✅   |
-| Upload Documents       |  ✅   |   ✅   |  ❌   |
-| Delete Own Documents   |  ✅   |   ✅   |  ❌   |
-| Delete Any Document    |  ✅   |   ❌   |  ❌   |
-| View Admin Dashboard   |  ✅   |   ❌   |  ❌   |
-| Change User Roles      |  ✅   |   ❌   |  ❌   |
-| Deactivate Users       |  ✅   |   ❌   |  ❌   |
-| View Audit Logs        |  ✅   |   ❌   |  ❌   |
-| Query Admin-level docs |  ✅   |   ❌   |  ❌   |
-| Query Member-level docs|  ✅   |   ✅   |  ❌   |
-| Query Guest-level docs |  ✅   |   ✅   |  ✅   |
+| Feature                 | Admin | Member | Guest |
+| ----------------------- | :---: | :----: | :---: |
+| View Dashboard          |   ✅   |   ✅    |   ✅   |
+| Chat with AI            |   ✅   |   ✅    |   ✅   |
+| Upload Documents        |   ✅   |   ✅    |   ❌   |
+| Delete Own Documents    |   ✅   |   ✅    |   ❌   |
+| Delete Any Document     |   ✅   |   ❌    |   ❌   |
+| View Admin Dashboard    |   ✅   |   ❌    |   ❌   |
+| Change User Roles       |   ✅   |   ❌    |   ❌   |
+| Deactivate Users        |   ✅   |   ❌    |   ❌   |
+| View Audit Logs         |   ✅   |   ❌    |   ❌   |
+| Query Admin-level docs  |   ✅   |   ❌    |   ❌   |
+| Query Member-level docs |   ✅   |   ✅    |   ❌   |
+| Query Guest-level docs  |   ✅   |   ✅    |   ✅   |
 
 **Double-Layer Verification:**
 - **Frontend**: `ProtectedRoute` component checks role from Redux store
@@ -287,78 +287,88 @@ Client will start at `http://localhost:5173`
 3. **Create a new organization** or **Join existing** with an invite code
 4. Start uploading documents and chatting!
 
+### 5. Production Deployment
+
+For detailed deployment instructions, including CORS setup, origin-aware routing, and multi-environment configuration, see [**DEPLOYMENT.md**](DEPLOYMENT.md).
+
+**Quick Summary:**
+- **Frontend**: Vercel (`https://nexus40.vercel.app`)
+- **Backend**: Render (`https://nexus-h82b.onrender.com`)
+- **Database**: MongoDB Atlas
+- **Routing**: Vercel rewrites `/api/*` to Render backend; CORS allows cross-origin requests
+
 ---
 
 ## 🔌 API Endpoints
 
 ### Authentication
-| Method | Endpoint           | Description                    | Auth |
-|--------|-------------------|--------------------------------|------|
-| POST   | `/api/auth/register` | Register + Join/Create org     | ❌   |
-| POST   | `/api/auth/login`    | Login, returns tokens          | ❌   |
-| POST   | `/api/auth/logout`   | Invalidate refresh token       | ❌   |
-| GET    | `/api/auth/refresh`  | Refresh access token           | 🍪   |
+| Method | Endpoint             | Description                | Auth |
+| ------ | -------------------- | -------------------------- | ---- |
+| POST   | `/api/auth/register` | Register + Join/Create org | ❌    |
+| POST   | `/api/auth/login`    | Login, returns tokens      | ❌    |
+| POST   | `/api/auth/logout`   | Invalidate refresh token   | ❌    |
+| GET    | `/api/auth/refresh`  | Refresh access token       | 🍪    |
 
 ### Users
-| Method | Endpoint              | Description         | Auth | Roles |
-|--------|-----------------------|---------------------|------|-------|
-| GET    | `/api/users/profile`  | Get own profile     | ✅   | All   |
-| PUT    | `/api/users/profile`  | Update name         | ✅   | All   |
-| PUT    | `/api/users/password` | Change password     | ✅   | All   |
-| DELETE | `/api/users/account`  | Delete account      | ✅   | All   |
+| Method | Endpoint              | Description     | Auth | Roles |
+| ------ | --------------------- | --------------- | ---- | ----- |
+| GET    | `/api/users/profile`  | Get own profile | ✅    | All   |
+| PUT    | `/api/users/profile`  | Update name     | ✅    | All   |
+| PUT    | `/api/users/password` | Change password | ✅    | All   |
+| DELETE | `/api/users/account`  | Delete account  | ✅    | All   |
 
 ### Organization
-| Method | Endpoint   | Description        | Auth | Roles |
-|--------|-----------|-------------------|------|-------|
-| GET    | `/api/org` | Get org details    | ✅   | All   |
+| Method | Endpoint   | Description     | Auth | Roles |
+| ------ | ---------- | --------------- | ---- | ----- |
+| GET    | `/api/org` | Get org details | ✅    | All   |
 
 ### Documents
-| Method | Endpoint                 | Description           | Auth | Roles         |
-|--------|--------------------------|-----------------------|------|---------------|
-| GET    | `/api/documents`         | List docs (filtered)  | ✅   | All           |
-| POST   | `/api/documents/upload`  | Upload file           | ✅   | Admin, Member |
-| DELETE | `/api/documents/:id`     | Delete document       | ✅   | Admin, Member |
+| Method | Endpoint                | Description          | Auth | Roles         |
+| ------ | ----------------------- | -------------------- | ---- | ------------- |
+| GET    | `/api/documents`        | List docs (filtered) | ✅    | All           |
+| POST   | `/api/documents/upload` | Upload file          | ✅    | Admin, Member |
+| DELETE | `/api/documents/:id`    | Delete document      | ✅    | Admin, Member |
 
 ### Chat
-| Method | Endpoint                              | Description       | Auth | Roles |
-|--------|---------------------------------------|--------------------|------|-------|
-| GET    | `/api/chat/sessions`                  | List sessions      | ✅   | All   |
-| GET    | `/api/chat/sessions/:id`              | Get session        | ✅   | All   |
-| POST   | `/api/chat/sessions`                  | Create session     | ✅   | All   |
-| POST   | `/api/chat/sessions/:id/messages`     | Send message       | ✅   | All   |
-| DELETE | `/api/chat/sessions/:id`              | Delete session     | ✅   | All   |
+| Method | Endpoint                          | Description    | Auth | Roles |
+| ------ | --------------------------------- | -------------- | ---- | ----- |
+| GET    | `/api/chat/sessions`              | List sessions  | ✅    | All   |
+| GET    | `/api/chat/sessions/:id`          | Get session    | ✅    | All   |
+| POST   | `/api/chat/sessions`              | Create session | ✅    | All   |
+| POST   | `/api/chat/sessions/:id/messages` | Send message   | ✅    | All   |
+| DELETE | `/api/chat/sessions/:id`          | Delete session | ✅    | All   |
 
 ### Admin
-| Method | Endpoint                           | Description          | Auth | Roles |
-|--------|-----------------------------------|----------------------|------|-------|
-| GET    | `/api/admin/stats`                | Dashboard stats       | ✅   | Admin |
-| GET    | `/api/admin/users`                | List org users        | ✅   | Admin |
-| PATCH  | `/api/admin/users/:id/role`       | Change role           | ✅   | Admin |
-| PATCH  | `/api/admin/users/:id/deactivate` | Deactivate user       | ✅   | Admin |
-| GET    | `/api/admin/documents`            | List all org docs     | ✅   | Admin |
-| DELETE | `/api/admin/documents/:id`        | Delete any doc        | ✅   | Admin |
+| Method | Endpoint                          | Description       | Auth | Roles |
+| ------ | --------------------------------- | ----------------- | ---- | ----- |
+| GET    | `/api/admin/stats`                | Dashboard stats   | ✅    | Admin |
+| GET    | `/api/admin/users`                | List org users    | ✅    | Admin |
+| PATCH  | `/api/admin/users/:id/role`       | Change role       | ✅    | Admin |
+| PATCH  | `/api/admin/users/:id/deactivate` | Deactivate user   | ✅    | Admin |
+| GET    | `/api/admin/documents`            | List all org docs | ✅    | Admin |
+| DELETE | `/api/admin/documents/:id`        | Delete any doc    | ✅    | Admin |
 
 ### Audit
-| Method | Endpoint           | Description          | Auth | Roles |
-|--------|--------------------|----------------------|------|-------|
-| GET    | `/api/audit/logs`  | Get audit logs       | ✅   | Admin |
+| Method | Endpoint          | Description    | Auth | Roles |
+| ------ | ----------------- | -------------- | ---- | ----- |
+| GET    | `/api/audit/logs` | Get audit logs | ✅    | Admin |
 
 ---
 
 ## 📊 Audit Events Tracked
 
-| Event              | Description                              |
-|--------------------|------------------------------------------|
-| `LOGIN`            | User login attempt                       |
-| `LOGOUT`           | User logout                              |
-| `FILE_UPLOAD`      | Document uploaded                        |
-| `FILE_DELETE`      | Document deleted                         |
-| `QUERY_SENT`       | Chat query submitted                     |
-| `ROLE_CHANGE`      | Admin changed a user's role              |
-| `USER_DEACTIVATED` | Admin deactivated a user                 |
-| `ACCOUNT_DELETED`  | User deleted their own account           |
-| `PROFILE_UPDATED`  | User updated their profile               |
-| `PASSWORD_CHANGED` | User changed their password              |
+| Event              | Description                    |
+| ------------------ | ------------------------------ |
+| `LOGIN`            | User login attempt             |
+| `LOGOUT`           | User logout                    |
+| `FILE_UPLOAD`      | Document uploaded              |
+| `FILE_DELETE`      | Document deleted               |
+| `QUERY_SENT`       | Chat query submitted           |
+| `ROLE_CHANGE`      | Admin changed a user's role    |
+| `USER_DEACTIVATED` | Admin deactivated a user       |
+| `ACCOUNT_DELETED`  | User deleted their own account |
+| `PROFILE_UPDATED`  | User updated their profile     |
+| `PASSWORD_CHANGED` | User changed their password    |
 
 Each log captures: `timestamp`, `userId`, `ipAddress`, `action`, `result`
 
@@ -378,11 +388,11 @@ The ML microservice will be built separately by the ML team using:
 
 The `server/src/services/mlBridge.js` file contains pre-built HTTP bridge functions:
 
-| Function          | ML Endpoint      | Description                         |
-|-------------------|------------------|-------------------------------------|
-| `ingestDocument`  | `POST /api/ingest` | Chunk + embed uploaded documents   |
-| `queryRAG`        | `POST /api/query`  | Semantic search + LLM generation   |
-| `transcribeAudio` | `POST /api/transcribe` | Whisper audio transcription    |
+| Function          | ML Endpoint            | Description                      |
+| ----------------- | ---------------------- | -------------------------------- |
+| `ingestDocument`  | `POST /api/ingest`     | Chunk + embed uploaded documents |
+| `queryRAG`        | `POST /api/query`      | Semantic search + LLM generation |
+| `transcribeAudio` | `POST /api/transcribe` | Whisper audio transcription      |
 
 These functions currently return graceful fallbacks when the ML service is unavailable.
 
