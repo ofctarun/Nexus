@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setCredentials } from '../authSlice';
 import { Eye, EyeOff, UserPlus } from 'lucide-react';
@@ -7,9 +7,13 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 
 export default function RegisterForm() {
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const initialInviteCode = urlParams.get('inviteCode') || '';
+
   const [formData, setFormData] = useState({
     name: '', email: '', password: '', confirmPassword: '',
-    orgAction: 'join', inviteCode: '', orgName: '',
+    orgAction: 'join', inviteCode: initialInviteCode, orgName: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -91,6 +95,9 @@ export default function RegisterForm() {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1.5" htmlFor="register-invite-code">Invite Code</label>
             <input id="register-invite-code" type="text" name="inviteCode" placeholder="e.g., NXS-XXXX-XXXX" className={`${inputCls} font-mono`} value={formData.inviteCode} onChange={handleChange} required />
+            {formData.inviteCode && (
+              <p className="text-xs text-gray-400 mt-1">Your invitation code is preloaded from the invitation link.</p>
+            )}
           </div>
         ) : (
           <div>

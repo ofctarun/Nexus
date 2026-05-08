@@ -48,6 +48,28 @@ export const adminApiSlice = apiSlice.injectEndpoints({
       invalidatesTags: ['Documents', 'Stats'],
     }),
 
+    // Fetch generated invite tokens
+    getInviteTokens: builder.query({
+      query: () => '/admin/invites',
+      providesTags: ['Invites'],
+    }),
+
+    createInviteToken: builder.mutation({
+      query: ({ role, level }) => ({
+        url: '/admin/invites',
+        method: 'POST',
+        body: { role, level },
+      }),
+    }),
+
+    sendInviteEmail: builder.mutation({
+      query: ({ code, email }) => ({
+        url: '/admin/invites/send',
+        method: 'POST',
+        body: { code, email },
+      }),
+    }),
+
     // Get audit logs
     getAuditLogs: builder.query({
       query: (params) => ({
@@ -66,5 +88,8 @@ export const {
   useDeactivateUserMutation,
   useGetAdminDocumentsQuery,
   useAdminDeleteDocumentMutation,
+  useGetInviteTokensQuery,
+  useCreateInviteTokenMutation,
+  useSendInviteEmailMutation,
   useGetAuditLogsQuery,
 } = adminApiSlice;
